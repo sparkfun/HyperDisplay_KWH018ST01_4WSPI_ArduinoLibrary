@@ -1,7 +1,7 @@
-HyperDisplay Arduino Library
+HyperDisplay KWH018ST01 4WSPI Arduino Library
 ========================================
 
-Providing uniform drawing and printing functions for a wide range of displays in the Arduino environment
+This is an extension for the [HyperDisplay](https://github.com/sparkfun/SparkFun_HyperDisplay) library that is fully configured for the KWH018ST01 module used on several SparkFun products. 
 
 
 Repository Contents
@@ -19,7 +19,7 @@ Documentation
 
 Products that use this Library 
 ---------------------------------
-
+* [LCD-15143](https://www.sparkfun.com/products/15143)
 
 Version History
 ---------------
