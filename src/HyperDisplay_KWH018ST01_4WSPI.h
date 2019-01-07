@@ -19,7 +19,7 @@ class KWH018ST01_4WSPI : public ILI9163C_4WSPI{
 private:
 protected:
 public:
-	KWH018ST01_4WSPI();	 Constructor
+	KWH018ST01_4WSPI();	// Constructor
 
 	uint8_t _rd, _bl;
 
@@ -29,11 +29,11 @@ public:
 
 	 void getCharInfo(uint8_t val, char_info_t  pchar);
 
-	 Some specialized drawing frunctions
+	// Some specialized drawing frunctions
 	void clearDisplay( void );
 
-	 Special Functions
-	void setWindowDefaults(wind_info_t  pwindow); // Overrrides default implementation in hyperdisplay class
+	// Special Functions
+	void setWindowDefaults(wind_info_t*  pwindow); // Overrrides default implementation in hyperdisplay class
 };
 
 #endif /* _HYPERDISPLAY_KWH018ST01_4WSPI_H_ */

@@ -1,17 +1,17 @@
 #include "HyperDisplay_KWH018ST01_4WSPI.h"
 
 ////////////////////////////////////////////////////////////
-//					KWH018ST03 Implementation			  //
+//					KWH018ST01 Implementation			  //
 ////////////////////////////////////////////////////////////
-char_info_t KWH018ST03_Default_CharInfo;
-wind_info_t KWH018ST03_Default_Window;
+char_info_t KWH018ST01_Default_CharInfo;
+wind_info_t KWH018ST01_Default_Window;
 
-KWH018ST03::KWH018ST03() : hyperdisplay(KWH018ST03_WIDTH, KWH018ST03_HEIGHT), ILI9163C_4WSPI(KWH018ST03_WIDTH, KWH018ST03_HEIGHT)
+KWH018ST01_4WSPI::KWH018ST01_4WSPI() : hyperdisplay(KWH018ST01_WIDTH, KWH018ST01_HEIGHT), ILI9163C_4WSPI(KWH018ST01_WIDTH, KWH018ST01_HEIGHT)
 {
 
 }
 
-ILI9163C_STAT_t KWH018ST03::begin(uint8_t dcPin, uint8_t rstPin, uint8_t csPin, uint8_t blPin, uint8_t rdPin, SPIClass &spiInterface, uint32_t spiFreq)
+ILI9163C_STAT_t KWH018ST01_4WSPI::begin(uint8_t dcPin, uint8_t rstPin, uint8_t csPin, uint8_t blPin, uint8_t rdPin, SPIClass &spiInterface, uint32_t spiFreq)
 {
 	// Call the functions to setup the super classes
 // Associate 
@@ -60,7 +60,7 @@ ILI9163C_STAT_t KWH018ST03::begin(uint8_t dcPin, uint8_t rstPin, uint8_t csPin, 
 	return ILI9163C_STAT_Nominal;
 }
 
-ILI9163C_STAT_t KWH018ST03::defaultConfigure( void )
+ILI9163C_STAT_t KWH018ST01_4WSPI::defaultConfigure( void )
 {
 	ILI9163C_STAT_t retval = ILI9163C_STAT_Nominal;
 
@@ -94,10 +94,10 @@ ILI9163C_STAT_t KWH018ST03::defaultConfigure( void )
 	retval = setInterfacePixelFormat( 0x06 );
 	if(retval != ILI9163C_STAT_Nominal){ return retval; }
 
-	retval = setColumnAddress( KWH018ST03_START_COL, KWH018ST03_STOP_COL );
+	retval = setColumnAddress( KWH018ST01_START_COL, KWH018ST01_STOP_COL );
 	if(retval != ILI9163C_STAT_Nominal){ return retval; }
 
-	retval = setRowAddress( KWH018ST03_START_ROW, KWH018ST03_STOP_ROW );
+	retval = setRowAddress( KWH018ST01_START_ROW, KWH018ST01_STOP_ROW );
 	if(retval != ILI9163C_STAT_Nominal){ return retval; }
 
 	retval = setMemoryAccessControl( true, true, false, false, true, false );
@@ -125,7 +125,7 @@ ILI9163C_STAT_t KWH018ST03::defaultConfigure( void )
   	return ILI9163C_STAT_Nominal;
 }
 
-void KWH018ST03::startup( void )
+void KWH018ST01_4WSPI::startup( void )
 {
 	// Assume that VDD and VCC are stable when this function is called
 	digitalWrite( _rst , HIGH);
@@ -150,7 +150,7 @@ void KWH018ST03::startup( void )
 // }
 
 
-void KWH018ST03::clearDisplay( void )
+void KWH018ST01_4WSPI::clearDisplay( void )
 {
 	// Store the old window pointer: 
 	wind_info_t * ptempWind = pCurrentWindow;
@@ -175,13 +175,13 @@ void KWH018ST03::clearDisplay( void )
 	pCurrentWindow = ptempWind;
 }
 
-void KWH018ST03::setWindowDefaults(wind_info_t * pwindow)
+void KWH018ST01_4WSPI::setWindowDefaults(wind_info_t * pwindow)
 {
 	// Fills out the default window structure with more or less reasonable defaults
-	pwindow->xMin = KWH018ST03_START_COL;
-	pwindow->yMin = KWH018ST03_START_ROW;
-	pwindow->xMax = KWH018ST03_STOP_COL;
-	pwindow->yMax = KWH018ST03_STOP_ROW;
+	pwindow->xMin = KWH018ST01_START_COL;
+	pwindow->yMin = KWH018ST01_START_ROW;
+	pwindow->xMax = KWH018ST01_STOP_COL;
+	pwindow->yMax = KWH018ST01_STOP_ROW;
 	pwindow->cursorX = 0;							// cursor values are in window coordinates
 	pwindow->cursorY = 0;
 	pwindow->xReset = 0;

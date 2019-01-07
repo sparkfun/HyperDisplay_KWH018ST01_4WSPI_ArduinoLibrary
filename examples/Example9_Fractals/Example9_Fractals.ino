@@ -1,6 +1,23 @@
-#include "HyperDisplay_ILI9163C.h"
-#include "BigNumber.h" // https://github.com/nickgammon/BigNumber
+/*
 
+This is an interactive example that allows you to explore the Mandelbrot Set fractal 
+using the SparkFun TFT LCD 1.8" 128x160 display 
+  Fractal on Wikipedia (https://en.wikipedia.org/wiki/Mandelbrot_set)
+  The display on SparkFun (https://www.sparkfun.com/products/15143)
+
+Note: This sketch requires more memory than an Uno can provide. 
+It also involves some heavy number crunching that would take 
+forever on an Uno. Therefore we reccomend a higher performance
+microcontroller such as a Teensy3.6
+
+Author: Owen Lyke
+Modified: 1/7/19
+
+This software is open source. Use it how you like, just don't hurt people.
+
+*/
+#include "HyperDisplay_KWH018ST01_4WSPI.h" // https://github.com/sparkfun/HyperDisplay_KWH018ST01_4WSPI_ArduinoLibrary
+#include "BigNumber.h" // https://github.com/nickgammon/BigNumber
 
 #define SERIAL_PORT Serial
 
@@ -68,7 +85,7 @@ bool continueDrawing = true;
 //#define SPI_SPEED 4000000
 #define SPI_SPEED 8000000
 
-KWH018ST03 myTFT; // Create an object of the type
+KWH018ST01_4WSPI myTFT; // Create an object of the type
 
 
 int scale = 10;
