@@ -16,8 +16,8 @@ Modified: 1/7/19
 This software is open source. Use it how you like, just don't hurt people.
 
 */
-#include "HyperDisplay_KWH018ST01_4WSPI.h" // https://github.com/sparkfun/HyperDisplay_KWH018ST01_4WSPI_ArduinoLibrary
-#include "BigNumber.h" // https://github.com/nickgammon/BigNumber
+#include "HyperDisplay_KWH018ST01_4WSPI.h"  //  https://github.com/sparkfun/HyperDisplay_KWH018ST01_4WSPI_ArduinoLibrary
+#include "BigNumber.h"                      // https://github.com/nickgammon/BigNumber
 
 #define SERIAL_PORT Serial
 
@@ -119,7 +119,7 @@ void setup ()
   screen.zoomEY = Y_PIX/2;
 
 
-  myTFT.begin(DC_PIN, RST_PIN, CS_PIN, PWM_PIN, READ_PIN, SPI_PORT, SPI_SPEED);
+  myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);
 
   giveMenu();
   

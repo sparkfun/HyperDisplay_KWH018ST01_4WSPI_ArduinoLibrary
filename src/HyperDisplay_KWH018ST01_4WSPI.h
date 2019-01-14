@@ -19,11 +19,14 @@ class KWH018ST01_4WSPI : public ILI9163C_4WSPI{
 private:
 protected:
 public:
+
+	
+
 	KWH018ST01_4WSPI();	// Constructor
 
-	uint8_t _rd, _bl;
+	uint8_t _bl;
 
-	ILI9163C_STAT_t begin(uint8_t dcPin, uint8_t rstPin, uint8_t csPin, uint8_t blPin, uint8_t rdPin, SPIClass &spiInterface = SPI, uint32_t spiFreq = ILI9163C_SPI_DEFAULT_FREQ);
+	ILI9163C_STAT_t begin(uint8_t dcPin, uint8_t csPin, uint8_t blPin, SPIClass &spiInterface = SPI, uint32_t spiFreq = ILI9163C_SPI_DEFAULT_FREQ);
 	ILI9163C_STAT_t defaultConfigure( void ); // The reccomended settings from the datasheet
 	void startup( void );		// The default startup for this particular display
 

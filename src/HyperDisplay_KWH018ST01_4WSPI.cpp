@@ -11,15 +11,16 @@ KWH018ST01_4WSPI::KWH018ST01_4WSPI() : hyperdisplay(KWH018ST01_WIDTH, KWH018ST01
 
 }
 
-ILI9163C_STAT_t KWH018ST01_4WSPI::begin(uint8_t dcPin, uint8_t rstPin, uint8_t csPin, uint8_t blPin, uint8_t rdPin, SPIClass &spiInterface, uint32_t spiFreq)
+ILI9163C_STAT_t KWH018ST01_4WSPI::begin(uint8_t dcPin, uint8_t csPin, uint8_t blPin, SPIClass &spiInterface, uint32_t spiFreq)
 {
 	// Call the functions to setup the super classes
 // Associate 
 	_dc = dcPin;
-	_rst = rstPin;
+	// _rst = rstPin;
+	_rst = 0xFF; // Not using reset pin
 	_cs = csPin;
 	_bl = blPin;
-	_rd = rdPin;
+	// _rd = rdPin;
 	_spi = &spiInterface;
 
 	if(spiFreq != ILI9163C_SPI_DEFAULT_FREQ)
@@ -31,17 +32,15 @@ ILI9163C_STAT_t KWH018ST01_4WSPI::begin(uint8_t dcPin, uint8_t rstPin, uint8_t c
 
 	// Set pinmodes
 	pinMode(_cs, OUTPUT);
-	pinMode(_rst, OUTPUT);
+	// pinMode(_rst, OUTPUT);
 	pinMode(_dc, OUTPUT);
 	pinMode(_bl, OUTPUT);
-	pinMode(_rd, OUTPUT);
 
 	// Set pins to default positions
 	digitalWrite(_cs, HIGH);
-	digitalWrite(_rst, HIGH);
+	// digitalWrite(_rst, HIGH);
 	digitalWrite(_dc, HIGH);
 	digitalWrite(_bl, HIGH);
-	digitalWrite(_rd, HIGH);
 
 	// Setup the default window
 	setWindowDefaults(pCurrentWindow);
@@ -128,11 +127,11 @@ ILI9163C_STAT_t KWH018ST01_4WSPI::defaultConfigure( void )
 void KWH018ST01_4WSPI::startup( void )
 {
 	// Assume that VDD and VCC are stable when this function is called
-	digitalWrite( _rst , HIGH);
+	if(_rst != 0xFF){ digitalWrite( _rst , HIGH); }
   	delay(10);
-  	digitalWrite( _rst , LOW);
+  	if(_rst != 0xFF){ digitalWrite( _rst , LOW); }
   	delay(10);
-  	digitalWrite( _rst , HIGH);
+  	if(_rst != 0xFF){ digitalWrite( _rst , HIGH); }
   	delay(120);
 	// Now you can do initialization
 }
