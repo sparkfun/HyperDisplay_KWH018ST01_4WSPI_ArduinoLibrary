@@ -31,11 +31,11 @@ This software is open source. Use it how you like, just don't hurt people.
 #define CS_PIN 5
 #define DC_PIN 6
 #define SPI_PORT SPI
-#define SPI_SPEED 32000000    // Requests host uC to use the fastest possible SPI speed up to 32 MHz
+#define SPI_SPEED 32000000        // Requests host uC to use the fastest possible SPI speed up to 32 MHz
 
-KWH018ST01_4WSPI myTFT;       // The KWH018ST01_4WSPI class is used for this breakout, and we will call our object myTFT
+KWH018ST01_4WSPI myTFT;           // The KWH018ST01_4WSPI class is used for this breakout, and we will call our object myTFT
 
-ILI9163C_color_18_t defaultColor; // To use a default color it is best to declare a global object
+ILI9163C_color_18_t defaultColor; // Global objects are used for default colors so that they are always in-scope
 
 void setup() {
   SERIAL_PORT.begin(9600);
@@ -56,15 +56,22 @@ void setup() {
 }
 
 void loop() {
+    lineTest();
+    delay(500);
   
-  lineTest();
-  delay(500);
-
-  rectTest();
-  delay(500);
-
-  circleTest();
-  delay(500);
+    rectTest();
+    delay(500);
+  
+    circleTest();
+    for(uint8_t indi = 250; indi > 1; indi--){
+      myTFT.setBacklight(indi); // Set the brightness of the backlight using PWM output
+      delay(10);
+    }
+    for(uint8_t indi = 0; indi < 250; indi++){
+      myTFT.setBacklight(indi); // Set the brightness of the backlight using PWM output
+      delay(10);
+    }
+    delay(500);
 }
 
 void lineTest( void )
@@ -111,11 +118,14 @@ void rectTest( void )
   }
 
   color = myTFT.rgbTo18b( 0, 0, 255 );
-  for(uint8_t indi = 0; indi < myTFT.xExt/2; indi+=1)
-  {
-    myTFT.rectangle(myTFT.xExt/2-1-indi, myTFT.yExt/2-1-indi, myTFT.xExt/2+1+indi, myTFT.yExt/2+1+indi, false, (color_t)&color);
-    delay(50);
-  }
+//  for(uint8_t indi = 0; indi < myTFT.xExt/2; indi+=1)
+//  {
+//    myTFT.rectangle(myTFT.xExt/2-1-indi, myTFT.yExt/2-1-indi, myTFT.xExt/2+1+indi, myTFT.yExt/2+1+indi, false, (color_t)&color);
+//    delay(50);
+//  }
+
+  myTFT.rectangle(0, 0, myTFT.xExt, myTFT.yExt, true, (color_t)&color);
+
 
   color = myTFT.rgbTo18b( 0, 0, 0 );
   for(uint8_t indi = 0; indi < myTFT.xExt/2; indi+=1)

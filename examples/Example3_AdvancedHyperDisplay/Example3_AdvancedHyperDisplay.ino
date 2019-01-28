@@ -1,6 +1,6 @@
 /*
 SparkFun TFT LCD 1.8" 128x160 using HyperDisplay
-Example2 HyperDisplay
+Example3 Advanced HyperDisplay
 
 This example goes into more detail about the powerful features of HyperDisplay
 
@@ -37,7 +37,7 @@ ILI9163C_color_18_t defaultColor;
 
 void setup() {
   SERIAL_PORT.begin(9600);
-  SERIAL_PORT.println("Example2 HyperDisplay : SparkFun TFT LCD 1.8in Breakout");
+  SERIAL_PORT.println("Example3 Advanced HyperDisplay : SparkFun TFT LCD 1.8in Breakout");
 
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);  // This is a non-hyperdisplay function, but it is required to make the display work
   myTFT.clearDisplay();                                       // clearDisplay is also not pat of hyperdisplay, but we will use it here for simplicity
@@ -134,14 +134,17 @@ void setup() {
     hd_hw_extent_t  yMax;           //
     hd_extent_t     cursorX;                  // Where the cursor is currently in window-coordinates
     hd_extent_t     cursorY;                  // Where the cursor is currently in window-coordinates
-    hd_extent_t     xReset;                 // Where the cursor goes on a reset location (window coordinates)
-    hd_extent_t     yReset;                 // Where the cursor goes on a reset location (window coordinates)
+    hd_extent_t     xReset;                   // Where the cursor goes on a reset location (window coordinates)
+    hd_extent_t     yReset;                   // Where the cursor goes on a reset location (window coordinates)
     char_info_t     lastCharacter;            // Information about the last character written.
-    color_t         currentSequenceData;    // The data that is used as the default color sequence
+    color_t         currentSequenceData;      // The data that is used as the default color sequence
     hd_colors_t     currentColorCycleLength;  // The default color sequence number of pixels
-    hd_colors_t     currentColorOffset;     // The current offset
-    color_t data;                         // A pointer to pixel data that is specific to the window. Can be left as NULL
-  }wind_info_t;                           // Window infomation structure for placing text on the display 
+    hd_colors_t     currentColorOffset;       // The current offset
+    bool            buffer;                   // Indicates either buffer or direct mode (direct is default)
+    color_t         data;                     // A pointer to pixel data that is specific to the window. Can be left as NULL
+    hd_pixels_t    numPixels;                 // The number of pixel types that data points to
+    bool            dynamic;                  // Indicator if the current buffer memory was dynamically allocated - so that it can be disposed of automatically
+  }wind_info_t;                        // Window infomation structure for placing objects on the display 
   */
   // You'll notice that the window structure handles min/max extent values, current cursor values, reset cursor values, character info, and color cycle info
 

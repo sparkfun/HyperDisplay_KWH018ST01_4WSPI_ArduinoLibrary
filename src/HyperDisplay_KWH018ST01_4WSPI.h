@@ -37,6 +37,7 @@ public:
 
 	// Special Functions
 	void setWindowDefaults(wind_info_t*  pwindow); // Overrrides default implementation in hyperdisplay class
+	void setBacklight(uint8_t b);
 };
 
 #endif /* _HYPERDISPLAY_KWH018ST01_4WSPI_H_ */

@@ -196,8 +196,10 @@ void KWH018ST01_4WSPI::setWindowDefaults(wind_info_t * pwindow)
 	pwindow->lastCharacter.causesNewline = false;
 	
 	pwindow->data = NULL;				// No window data yet
-	setCurrentWindowColorSequence(NULL, 1, 0);	// Setup the default color (Which is NULL, so that you know it is not set yet)
+	setWindowColorSequence(pwindow, NULL, 1, 0);	// Setup the default color (Which is NULL, so that you know it is not set yet)
 }
 
-
+void KWH018ST01_4WSPI::setBacklight(uint8_t b){
+	analogWrite(_bl, b);
+}
 

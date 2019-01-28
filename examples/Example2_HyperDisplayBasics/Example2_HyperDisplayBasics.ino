@@ -1,6 +1,6 @@
 /*
 SparkFun TFT LCD 1.8" 128x160 using HyperDisplay
-Example2 HyperDisplay
+Example2 HyperDisplay Basics
 
 This example is designed to introduce the base functions that are available in any HyperDisplay powered display.
 
@@ -50,7 +50,7 @@ ILI9163C_color_18_t defaultColor; // To use a default color it is best to make t
 
 void setup() {
   SERIAL_PORT.begin(9600);
-  SERIAL_PORT.println("Example2 HyperDisplay : SparkFun TFT LCD 1.8in Breakout");
+  SERIAL_PORT.println("Example2 HyperDisplay Basics : SparkFun TFT LCD 1.8in Breakout");
 
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);  // This is a non-hyperdisplay function, but it is required to make the display work
   myTFT.clearDisplay();                                       // clearDisplay is also not pat of hyperdisplay, but we will use it here for simplicity
