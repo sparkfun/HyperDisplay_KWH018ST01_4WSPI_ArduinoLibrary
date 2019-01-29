@@ -52,7 +52,7 @@ void setup() {
   SERIAL_PORT.println("Example2 HyperDisplay : SparkFun TFT LCD 1.8in Breakout");
 
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);  // This is a non-hyperdisplay function, but it is required to make the display work
-  myTFT.clearDisplay();                                       // clearDisplay is also not pat of hyperdisplay, but we will use it here for simplicity
+  myTFT.clearDisplay();                                       // clearDisplay is also not part of hyperdisplay, but we will use it here for simplicity
 
   defaultColor = myTFT.rgbTo18b( 255, 255, 255 );
   myTFT.setCurrentWindowColorSequence((color_t)&defaultColor);
