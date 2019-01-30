@@ -6,8 +6,8 @@ This is an extension for the [HyperDisplay](https://github.com/sparkfun/SparkFun
 Dependencies
 ------------
 You will also need to install these libraries, if you haven't already. Use the Arduino Library Manager or install the ZIP directly. 
-[HyperDisplay Graphics Library](https://github.com/sparkfun/SparkFun_HyperDisplay)
-[HyperDisplay ILI9163C Driver](https://github.com/sparkfun/HyperDisplay_ILI9163C_ArduinoLibrary)
+* [HyperDisplay Graphics Library](https://github.com/sparkfun/SparkFun_HyperDisplay)
+* [HyperDisplay ILI9163C Driver](https://github.com/sparkfun/HyperDisplay_ILI9163C_ArduinoLibrary)
 
 
 
