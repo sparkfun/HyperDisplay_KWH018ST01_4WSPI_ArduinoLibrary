@@ -19,7 +19,7 @@ Documentation
 
 Products that use this Library 
 ---------------------------------
-* [LCD-15143](https://www.sparkfun.com/products/15143)
+* [SparkFun 1.8 inch TFT Breakout, LCD-15143](https://www.sparkfun.com/products/15143)
 
 Version History
 ---------------
