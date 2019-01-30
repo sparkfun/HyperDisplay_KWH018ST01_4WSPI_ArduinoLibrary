@@ -19,6 +19,7 @@ startup	KEYWORD2
 getCharInfo	KEYWORD2
 clearDisplay	KEYWORD2
 setWindowDefaults	KEYWORD2
+setBacklight	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
