@@ -154,6 +154,11 @@ void setup() {
   wind_info_t wind1, wind2, wind3;  // Create several window objects
   ILI9163C_color_18_t color1, color2, color3; 
 
+  // Initialize the windows to defualt settings (this is a pretty important step unless you are extra careful to manually initialize each and every paramter)
+  myTFT.setWindowDefaults(&wind1);
+  myTFT.setWindowDefaults(&wind2);
+  myTFT.setWindowDefaults(&wind3);
+
   color1.r = 0xFF;    // Set the colors to red, green, and blue respectively
   color1.g = 0x00;
   color1.b = 0x00;
