@@ -203,6 +203,15 @@ void KWH018ST01_4WSPI::setWindowDefaults(wind_info_t * pwindow)
 }
 
 void KWH018ST01_4WSPI::setBacklight(uint8_t b){
+#if defined(ARDUINO_ARCH_ESP32)
+	if(b > 127){
+		digitalWrite(_bl, HIGH);
+	}
+	else{
+		digitalWrite(_bl, LOW);
+	}
+#else
 	analogWrite(_bl, b);
+#endif
 }
 
