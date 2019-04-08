@@ -1,12 +1,12 @@
 /*
 
-This is an interactive example that allows you to explore the Mandelbrot Set fractal 
-using the SparkFun TFT LCD 1.8" 128x160 display 
+This is an interactive example that allows you to explore the Mandelbrot Set fractal
+using the SparkFun TFT LCD 1.8" 128x160 display
   Fractal on Wikipedia (https://en.wikipedia.org/wiki/Mandelbrot_set)
   The display on SparkFun (https://www.sparkfun.com/products/15143)
 
-Note: This sketch requires more memory than an Uno can provide. 
-It also involves some heavy number crunching that would take 
+Note: This sketch requires more memory than an Uno can provide.
+It also involves some heavy number crunching that would take
 forever on an Uno. Therefore we reccomend a higher performance
 microcontroller such as a Teensy3.6
 
@@ -21,7 +21,7 @@ This software is open source. Use it how you like, just don't hurt people.
 
 #define SERIAL_PORT Serial
 
-#define X_PIX 128
+#define X_PIX 112
 #define Y_PIX 160
 #define NUM_PIX ((X_PIX)*(Y_PIX))
 
@@ -82,17 +82,15 @@ bool continueDrawing = true;
 #define CS_PIN 5
 #define DC_PIN 6
 #define SPI_PORT SPI
-//#define SPI_SPEED 4000000
-#define SPI_SPEED 8000000
+#define SPI_SPEED 32000000
 
 KWH018ST01_4WSPI myTFT; // Create an object of the type
-
 
 int scale = 10;
 
 void setup ()
 {
-  SERIAL_PORT.begin (115200);
+  SERIAL_PORT.begin (9600);
 //  while (!SERIAL_PORT){};
   delay(500);
   BigNumber::begin (DEFAULT_SCALE);  // initialize library
@@ -100,7 +98,6 @@ void setup ()
 
   // Variables
   fractalView view;
-
 
   view.center.a = "-0.5";
   view.center.b = "-0.0";
@@ -118,11 +115,10 @@ void setup ()
   screen.zoomEX = X_PIX/2;
   screen.zoomEY = Y_PIX/2;
 
-
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);
 
   giveMenu();
-  
+
   // Draw with the initial settings
   inititalize( &screen, &view );
   computeResults( &screen, &view, 16 );
@@ -130,7 +126,7 @@ void setup ()
 //  showPixels();
 
 
-  
+
   while(1)
   {
     continueDrawing = true;
@@ -169,23 +165,23 @@ void computeResults( pixelView* ppix, fractalView* pfrac, uint8_t divisor )
               if(continueDrawing)
               {
                 f_it_t numIt = 0;
-                
+
                 if(!ppix->pComputed[indj + (ppix->yExt * indi)])
                 {
                   bigComplexNumber c;
                   c.a = (pfrac->center.a) + ((BigNumber(indi) / BigNumber(ppix->xExt)) - BigNumber("0.5")) * (pfrac->realExt);
                   c.b = (pfrac->center.b) + ((BigNumber(indj) / BigNumber(ppix->yExt)) - BigNumber("0.5")) * (pfrac->imagExt);
-            
+
                   // Check here if you are in any known regions that will be zero (because they take the longest to run)! TODO
-                  if(!knownRegions(c)) 
+                  if(!knownRegions(c))
                   {
                     numIt = computeMandelbrot(c, ppix->iterations);
                   }
-                  
-                  ppix->presults[indj + (ppix->yExt * indi)] = numIt;      
+
+                  ppix->presults[indj + (ppix->yExt * indi)] = numIt;
                   ppix->pComputed[indj + (ppix->yExt * indi)] = true;
                 }
-          
+
                 // Check min/max values
                 if((indi == 0) && (indj == 0) && (indd == divisor))
                 {
@@ -222,7 +218,7 @@ f_it_t computeMandelbrot(bigComplexNumber c, f_it_t maxIterations)
   for(f_it_t indi = 0; indi < maxIterations; indi++)
   {
     result = cn_multiply(result, result); // result^2 + c
-    result.a = result.a + c.a; 
+    result.a = result.a + c.a;
     result.b = result.b + c.b;
     if(cn_magnitude(result) > BigNumber("2.0"))
     {
@@ -260,7 +256,7 @@ void giveMenu( void )
   SERIAL_PORT.println("Press 'wasd' to move center");
   SERIAL_PORT.println("Press '-' or '=' to zoom in/out");
   SERIAL_PORT.println("Press 'z' to apply new window");
-  
+
 }
 
 
@@ -285,7 +281,7 @@ void results2pixels( pixelView* ppix, ILI9163C_color_18_t* screenMap )
   ILI9163C_color_18_t color;
   bool rowComputed;
   f_ext_t lastIndi = 0;
-  
+
   for( f_ext_t indi = 0; indi < ppix->xExt; indi++ )
   {
     red = 0;
@@ -301,7 +297,7 @@ void results2pixels( pixelView* ppix, ILI9163C_color_18_t* screenMap )
         rowComputed = true;
       }
     }
-    
+
     if(rowComputed)
     {
       lastIndi = indi;
@@ -314,14 +310,14 @@ void results2pixels( pixelView* ppix, ILI9163C_color_18_t* screenMap )
 //        Serial.print("Row computed = "); Serial.print(rowComputed);
 
     for( f_ext_t indj = 0; indj < ppix->yExt; indj++)
-    { 
+    {
       if(rowComputed)
       {
         if(ppix->pComputed[indj + (ppix->yExt * indi)])
         {
-        
+
           f_it_t value = ppix->presults[indj + (ppix->yExt * indi)];
-    
+
           if( value != 0)
           {
             uint16_t hue = getHue( ppix, value );
@@ -362,7 +358,7 @@ void showPixels( void )
         rectColor.r = 255;
         rectColor.g = 255;
         rectColor.b = 255;
-        
+
   myTFT.fillFromArray(0, 0, 127, 159, (color_t)screenMap,  NUM_PIX, true);
   myTFT.rectangle((screen.zoomCX-(screen.zoomEX/2)), (screen.zoomCY-(screen.zoomEY/2)), (screen.zoomCX+(screen.zoomEX/2)), (screen.zoomCY+(screen.zoomEY/2)), false, (color_t)&rectColor);
 }
@@ -375,7 +371,7 @@ void loop() {
 void viewToZoom( pixelView* ppix, fractalView* pfrac )
 {
   // Apply the zoom level (in pixels) to the view
-  
+
 
   bigComplexNumber newc;
   newc.a = (pfrac->center.a) + ((BigNumber(ppix->zoomCX) / BigNumber(ppix->xExt)) - BigNumber("0.5")) * (pfrac->realExt);
@@ -389,7 +385,7 @@ void viewToZoom( pixelView* ppix, fractalView* pfrac )
 
   pfrac->realExt = newRealExt;
   pfrac->imagExt = newImagExt;
-          
+
 
 
   // Reset the default zoom
@@ -400,7 +396,7 @@ void viewToZoom( pixelView* ppix, fractalView* pfrac )
 }
 
 void checkAndHandleInput(pixelView* ppix, fractalView* pfrac, bool* predraw )
-{ 
+{
   while(SERIAL_PORT.available())
   {
     Serial.print(SERIAL_PORT.available());
@@ -409,12 +405,12 @@ void checkAndHandleInput(pixelView* ppix, fractalView* pfrac, bool* predraw )
 
     switch(c)
     {
-      case 'r' : 
+      case 'r' :
         *predraw = true;
         continueDrawing = false;
         break;
 
-      case 'i' : 
+      case 'i' :
          ppix->iterations += 50;
         *predraw = true;
         continueDrawing = false;
@@ -445,7 +441,7 @@ void checkAndHandleInput(pixelView* ppix, fractalView* pfrac, bool* predraw )
         ppix->zoomCY = ppix->zoomCY-1;
         break;
 
-      case 's' : 
+      case 's' :
        ppix->zoomCY = ppix->zoomCY+1;
        break;
 
@@ -458,8 +454,8 @@ void checkAndHandleInput(pixelView* ppix, fractalView* pfrac, bool* predraw )
       case 'd' :
         ppix->zoomCX = ppix->zoomCX+1;
         break;
-  
-      case '-' : 
+
+      case '-' :
         // Zoom out
         break;
 

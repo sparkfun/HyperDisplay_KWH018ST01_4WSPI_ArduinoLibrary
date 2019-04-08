@@ -2,10 +2,10 @@
 SparkFun TFT LCD 1.8" 128x160 using HyperDisplay
 Example5 Exploring RAM
 
-This example is not really going to help understand how to use the TFT display or HyperDisplay library. 
+This example is not really going to help understand how to use the TFT display or HyperDisplay library.
 However it is a neat little exploration for the curious!
 
-*Note* Because of the memory requirements of this example it cannot be run on an Arduino Uno or other 
+*Note* Because of the memory requirements of this example it cannot be run on an Arduino Uno or other
 AtMega 328 based board. Consider using a SAMD21 or Teensy board instead.
 
 Arduino Pin    ->   Breakout Pin
@@ -35,13 +35,17 @@ This software is open source. Use it how you like, just don't hurt people.
 #define SPI_PORT SPI
 #define SPI_SPEED 32000000    // Requests host uC to use the fastest possible SPI speed up to 32 MHz
 
-KWH018ST01_4WSPI myTFT;       
+KWH018ST01_4WSPI myTFT;
 
 ILI9163C_color_18_t defaultColor;
 
 void setup() {
   SERIAL_PORT.begin(9600);
-  SERIAL_PORT.println("Example2 HyperDisplay : SparkFun TFT LCD 1.8in Breakout");
+
+  //Uncomment this if you want to wait to println until the serial monitor is open.
+  //while (!SERIAL_PORT); //Wait for Serial Monitor to Open
+
+  SERIAL_PORT.println("Example5 HyperDisplay : SparkFun TFT LCD 1.8in Breakout");
 
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);  // This is a non-hyperdisplay function, but it is required to make the display work
   myTFT.clearDisplay();                                       // clearDisplay is also not pat of hyperdisplay, but we will use it here for simplicity
@@ -54,16 +58,16 @@ void setup() {
   uint32_t count = 0;
 
 
-  // At your option try setting some memory values to see if you can recognize them later...  
+  // At your option try setting some memory values to see if you can recognize them later...
   for(uint32_t indi = 0; indi < 3000; indi++){        // And to be clear - this is not considered a good coding practice ususally!
-    *(((uint8_t*)addr) + 0x8000 + 3*indi + 0) = 0x00;     
-    *(((uint8_t*)addr) + 0x8000 + 3*indi + 1) = 0xFF; 
-    *(((uint8_t*)addr) + 0x8000 + 3*indi + 2) = 0x00; 
+    *(((uint8_t*)addr) + 0x8000 + 3*indi + 0) = 0x00;
+    *(((uint8_t*)addr) + 0x8000 + 3*indi + 1) = 0xFF;
+    *(((uint8_t*)addr) + 0x8000 + 3*indi + 2) = 0x00;
   }
 
 
   while(1){
-      myTFT.setCurrentWindowMemory((color_t)addr, 128*160); 
+      myTFT.setCurrentWindowMemory((color_t)addr, 128*160);
       myTFT.show();
 
       count++;
@@ -72,13 +76,13 @@ void setup() {
       SERIAL_PORT.println(count);
   }
 
-  // On a Teensy3.6 this quit after 410 iterations. 
+  // On a Teensy3.6 this quit after 410 iterations.
   // That is roughly correct for the RAM size on the Teensy3.6.
   // Each pixel is 3 bytes. We show 128*160 pixels = 61 kilobytes for each screen.
-  // Each count adds 160 pixels to the "consumed" RAM, or 480 bytes. For 410 counts 
+  // Each count adds 160 pixels to the "consumed" RAM, or 480 bytes. For 410 counts
   // we are using an additional 410*480 = 196.8 kilobytes.
   // Together they sum to 258240 bytes, Arduino says the maximum is 262144 bytes.
-  // We might fairly assume that the remaining 3904 bytes are located before 'defaultColor' in RAM 
+  // We might fairly assume that the remaining 3904 bytes are located before 'defaultColor' in RAM
   // and are part of the Arduino and HyperDisplay overheads
 }
 
