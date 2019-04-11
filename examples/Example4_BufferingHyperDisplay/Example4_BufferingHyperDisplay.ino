@@ -69,7 +69,9 @@ void setup() {
   // This is to reduce using memory usage but to accumulate drawing operations we will need to provide some memory.
   ILI9163C_color_18_t wholeScreenMem[128*160];  // This is enough memory for the whole screen
   ILI9163C_color_18_t smallWindowMem[32*64];    // And this is a smaller portion of memory - good for 32*64 pixels
+#ifndef ESP_PLATFORM
   ILI9163C_color_18_t randomWindowMem[64*64];   // This is a portion of memory that we will use later.
+#endif
 
   wind_info_t smallWindow;                // Here we are creating another window to use in this example - you'll see why shortly
   myTFT.setWindowDefaults(&smallWindow);  // This function helps to initialize the window so we can do less work and still not worry
@@ -80,7 +82,9 @@ void setup() {
   myTFT.setWindowColorSequence(&smallWindow, (color_t)&defaultColor);
 
   // Good, but HyperDisplay still needs to know about the memory
+#ifndef ESP_PLATFORM
   myTFT.setCurrentWindowMemory((color_t)wholeScreenMem, 128*160);       // setCurrentWindowMemory applies the memory to the current window. By default the current window is the whole screen
+#endif
   myTFT.setWindowMemory(&smallWindow, (color_t)smallWindowMem, 32*64);  // It is really importatnt to tell the right number of pixels to this function to avoid buffer over/underflow problems
                                                                         // P.S. this function allows you to set memory to a window that is not the current window
 
@@ -123,6 +127,7 @@ void setup() {
 
 
 
+#ifndef ESP_PLATFORM
 
   // As a side note (because it is cool) let's see what happens if we show uninitialized memory...
   wind_info_t randomWindow;                // Here we are creating another window to use in this example - you'll see why shortly
@@ -133,7 +138,7 @@ void setup() {
   randomWindow.yMax = 157;
   myTFT.setWindowMemory(&randomWindow, (color_t)randomWindowMem, 64*64);
   myTFT.show(&randomWindow);               // What will show up in this window?
-
+#endif
   /* The answer is "whatever data was in memory when you created the 'randomWindowMem' array," however there are
      some interesting follow-ups to that question. Chances are good that when you try this you will see something
      that looks like static on a CRT TV. This leads us to believe that the memory contents were random when the
