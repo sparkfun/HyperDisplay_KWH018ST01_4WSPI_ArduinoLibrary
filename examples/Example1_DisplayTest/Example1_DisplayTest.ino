@@ -39,6 +39,10 @@ ILI9163C_color_18_t defaultColor; // Global objects are used for default colors 
 
 void setup() {
   SERIAL_PORT.begin(9600);
+
+  //Uncomment this if you want to wait to println until the serial monitor is open.
+  //while (!SERIAL_PORT); //Wait for Serial Monitor to Open
+
   SERIAL_PORT.println("Example1 Display Test : SparkFun TFT LCD 1.8in Breakout");
 
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);
@@ -46,7 +50,7 @@ void setup() {
 
   myTFT.setTextCursor(0,0);            // Sets the cursor relative to the current window, however the current (default) window is equivalent to the whole display. (0,0) is the upper left corner and (myTFT.xExt-1, myTFT.yExt-1) is the lower right
   myTFT.setCurrentWindowColorSequence((color_t)&defaultColor);
-  
+
   uint16_t hue = HSV_HUE_MIN;
   while(hue <= HSV_HUE_MAX){
     myTFT.setTextCursor(0,0);
@@ -58,10 +62,10 @@ void setup() {
 void loop() {
     lineTest();
     delay(500);
-  
+
     rectTest();
     delay(500);
-  
+
     circleTest();
     for(uint8_t indi = 250; indi > 1; indi--){
       myTFT.setBacklight(indi); // Set the brightness of the backlight using PWM output
@@ -77,7 +81,7 @@ void loop() {
 void lineTest( void )
 {
   ILI9163C_color_18_t color;
-  
+
   myTFT.clearDisplay();
 
   color = myTFT.rgbTo18b( 255, 255, 255 );
@@ -85,7 +89,7 @@ void lineTest( void )
   {
     myTFT.line(0,0,indi,myTFT.yExt-1,1,(color_t)&color);
   }
-  
+
   color = myTFT.rgbTo18b( 255, 0, 0 );
   for(hd_hw_extent_t indi = 0; indi < myTFT.yExt; indi++)
   {
@@ -139,7 +143,7 @@ void circleTest( void )
 {
   myTFT.clearDisplay();
   ILI9163C_color_18_t color;
-  
+
   for(uint8_t indi = 0; indi < (myTFT.xExt/2 - 1); indi++)
   {
     color = myTFT.hsvTo18b( (uint16_t)((double)(((double)HSV_HUE_MAX*indi)/((double)myTFT.xExt/2 - 1))), 255, 255 );

@@ -27,10 +27,10 @@ This software is open source. Use it how you like, just don't hurt people.
 What is hyperdisplay?
 HD is an abstract C++ library for controlling 2D output devices by taking advantage of a common interface.
 
-Despite many individual display technologies needing varying electrical interfaces to operate they nearly 
-all can be controlled (conceptually) as long as you have the ability to set a particular pixel to an 
+Despite many individual display technologies needing varying electrical interfaces to operate they nearly
+all can be controlled (conceptually) as long as you have the ability to set a particular pixel to an
 arbitrary color. Hyperdisplay "assumes" that this capability exists and then uses it to implement drawing
-functions, text, and many other capabilities in a standard, hardware-independent manner. 
+functions, text, and many other capabilities in a standard, hardware-independent manner.
 */
 
 #define SERIAL_PORT Serial    // Allows users to easily change target serial port (e.g. SAMD21's SerialUSB)
@@ -42,7 +42,7 @@ functions, text, and many other capabilities in a standard, hardware-independent
 #define SPI_SPEED 32000000    // Requests host uC to use the fastest possible SPI speed up to 32 MHz
 
 KWH018ST01_4WSPI myTFT;       // The KWH018ST01_4WSPI class is used for this breakout, and we will call our object myTFT
-                              // The class is derived from the hyperdisplay class, and so it has all the functionality of 
+                              // The class is derived from the hyperdisplay class, and so it has all the functionality of
                               // hyperdisplay plus a little more. In this example we will only focus on the functions that
                               // come from hyperdisplay
 
@@ -50,6 +50,10 @@ ILI9163C_color_18_t defaultColor; // To use a default color it is best to make t
 
 void setup() {
   SERIAL_PORT.begin(9600);
+
+  //Uncomment this if you want to wait to println until the serial monitor is open.
+  //while (!SERIAL_PORT); //Wait for Serial Monitor to Open
+
   SERIAL_PORT.println("Example2 HyperDisplay Basics : SparkFun TFT LCD 1.8in Breakout");
 
   myTFT.begin(DC_PIN, CS_PIN, PWM_PIN, SPI_PORT, SPI_SPEED);  // This is a non-hyperdisplay function, but it is required to make the display work
@@ -61,7 +65,7 @@ void setup() {
   // Exploration of HyperDisplay abilities:
   /*
       The base layer of hyperdisplay only handles drawing functions:
-        pixel   
+        pixel
         xline
         yline
         line
@@ -72,10 +76,10 @@ void setup() {
         fillWindow
       Each of these functions roughly follows a pattern for the arguments: (locations, options, color info)
       Also the location information of these functions is relative to a "window" - though the defualt window
-      the entire display, so for basic applications there's no need to worry about it. 
+      the entire display, so for basic applications there's no need to worry about it.
 
       Because HD can handle everything from monochrome OLEDs to full color TFTs it is up to the user to specify
-      color information. HD uses the notion of color cycles - that is patterns of colors that can be repeated. 
+      color information. HD uses the notion of color cycles - that is patterns of colors that can be repeated.
       Every drawing function uses parameters called colorCycleLength and colorCycleOffset, which default to 1 and 0
   */
 
@@ -97,13 +101,13 @@ void setup() {
   pixelColor.r = 0xFF;            // Set the r, g, and b values how you like
   pixelColor.g = 0;
   pixelColor.b = 0;
-  
-  myTFT.clearDisplay();                     // To be flexible the 'pixel' function needs to take a 'color_t' type 
+
+  myTFT.clearDisplay();                     // To be flexible the 'pixel' function needs to take a 'color_t' type
   myTFT.pixel(0,0, (color_t)&pixelColor);   // so we cast the reference of our pixelColor to the color_t type
   delay(5000);
 
   // Now let's do examples of the other HyperDipslay drawing functions using our color:
-  myTFT.clearDisplay(); 
+  myTFT.clearDisplay();
   myTFT.setTextCursor(0,0);
   myTFT.print("(X/Y)Line Example...");
   delay(1000);
@@ -119,7 +123,7 @@ void setup() {
     0x80, // blue
   };
 
-  myTFT.clearDisplay(); 
+  myTFT.clearDisplay();
   myTFT.setTextCursor(0,0);
   myTFT.print("Rectangle Example...");
   delay(1000);
@@ -129,7 +133,7 @@ void setup() {
   delay(5000);
 
 
-  myTFT.clearDisplay(); 
+  myTFT.clearDisplay();
   myTFT.setTextCursor(0,0);
   myTFT.print("Circle Example...");
   delay(1000);
@@ -138,11 +142,11 @@ void setup() {
   myTFT.circle(64, 64, 24, true, (color_t)&innerRectColor);
   myTFT.circle(64, 64, 12, false, (color_t)&pixelColor);
   delay(5000);
-  
 
 
-  // Now let's talk about the option to use a default color!  
-  myTFT.clearDisplay(); 
+
+  // Now let's talk about the option to use a default color!
+  myTFT.clearDisplay();
   myTFT.setTextCursor(0,0);
   myTFT.print("Default Color Example...");  // Default color is used to print to the screen
   delay(1000);
@@ -151,8 +155,8 @@ void setup() {
   myTFT.pixel(5, 40);                                                   // Default color also can be used in place of a color in any drawing function
   myTFT.setTextCursor(0,0);
   myTFT.setCurrentWindowColorSequence((color_t)&innerRectColor);        // You can change the current default color like this
-  myTFT.print("Changing the default color changes the color of text and drawing functions!");   
-  myTFT.pixel(7, 40);                                                   // And as shown here the new default color is used for the next call to a drawing function                                   
+  myTFT.print("Changing the default color changes the color of text and drawing functions!");
+  myTFT.pixel(7, 40);                                                   // And as shown here the new default color is used for the next call to a drawing function
   delay(20000);
 
 
